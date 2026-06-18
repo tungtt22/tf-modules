@@ -1,0 +1,37 @@
+version: 2
+
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/aws/networking/vpc"
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/azure/networking/vnet"
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: "terraform"
+    directory: "/modules/gcp/networking/vpc"
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: "terraform"
+    directory: "/examples/aws/networking/vpc-basic"
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: "terraform"
+    directory: "/examples/azure/networking/vnet-basic"
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: "terraform"
+    directory: "/examples/gcp/networking/vpc-basic"
+    schedule:
+      interval: weekly

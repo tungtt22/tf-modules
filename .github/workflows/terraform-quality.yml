@@ -1,0 +1,66 @@
+name: Terraform Quality
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  fmt-and-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.8
+
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4
+        with:
+          tflint_version: v0.53.0
+
+      - name: Terraform fmt
+        run: terraform fmt -check -recursive modules examples
+
+      - name: TFLint version
+        run: tflint --version
+
+      - name: TFLint modules
+        run: |
+          find modules -type f -name main.tf -exec dirname {} \; | sort -u | while read -r dir; do
+            echo "Linting $dir"
+            tflint --chdir="$dir"
+          done
+
+      - name: TFLint examples
+        run: |
+          find examples -type f -name main.tf -exec dirname {} \; | sort -u | while read -r dir; do
+            echo "Linting $dir"
+            tflint --chdir="$dir"
+          done
+
+  validate-examples:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.8
+
+      - name: Terraform init and validate examples
+        run: |
+          find examples -type f -name main.tf -exec dirname {} \; | sort -u | while read -r dir; do
+            echo "Validating $dir"
+            terraform -chdir="$dir" init -backend=false -input=false
+            terraform -chdir="$dir" validate
+          done
