@@ -73,7 +73,11 @@ module "context" {
 | Cloud | Module | Purpose |
 | --- | --- | --- |
 | Common | `common/context` | Shared naming, labels, tags, metadata |
+| Common | `common/name` | Provider-agnostic canonical name builder |
+| Common | `common/meta_data` | Provider-agnostic metadata, tags, and labels helper |
+| Common | `common/multi_string_replacer` | Utility placeholder replacement helper |
 | AWS | `aws/networking/vpc` | Starter VPC module scaffold |
+| AWS | `aws/storage/s3` | Reusable S3 bucket module with secure defaults |
 | Azure | `azure/networking/vnet` | Starter VNet module scaffold |
 | GCP | `gcp/networking/vpc` | Starter VPC module scaffold |
 

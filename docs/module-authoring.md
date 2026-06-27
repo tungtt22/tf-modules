@@ -48,5 +48,6 @@ Each module README should explain:
 - Share conventions, not provider internals.
 - Reuse naming and metadata patterns through `modules/common`.
 - Do not force AWS, Azure, and GCP modules to have identical inputs if the platforms behave differently.
+- Keep organization-specific cloud conventions out of `modules/common` unless they are truly provider-agnostic.
 
 Consistency matters, but correctness matters more.
