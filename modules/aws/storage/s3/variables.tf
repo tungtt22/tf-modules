@@ -90,3 +90,45 @@ variable "website_error_document" {
   type        = string
   default     = "error.html"
 }
+
+variable "object_ownership" {
+  description = "S3 object ownership mode. Use BucketOwnerEnforced for the most secure default."
+  type        = string
+  default     = "BucketOwnerEnforced"
+
+  validation {
+    condition     = contains(["BucketOwnerEnforced", "BucketOwnerPreferred", "ObjectWriter"], var.object_ownership)
+    error_message = "object_ownership must be one of BucketOwnerEnforced, BucketOwnerPreferred, or ObjectWriter."
+  }
+}
+
+variable "additional_policy_json" {
+  description = "Optional additional bucket policy JSON to merge with module-managed statements."
+  type        = string
+  default     = null
+}
+
+variable "cors_rules" {
+  description = "Optional CORS rules for the bucket."
+  type = list(object({
+    allowed_headers = optional(list(string), [])
+    allowed_methods = list(string)
+    allowed_origins = list(string)
+    expose_headers  = optional(list(string), [])
+    max_age_seconds = optional(number)
+  }))
+  default = []
+}
+
+variable "lifecycle_rules" {
+  description = "Optional lifecycle rules for the bucket."
+  type = list(object({
+    id                                     = string
+    enabled                                = optional(bool, true)
+    prefix                                 = optional(string)
+    abort_incomplete_multipart_upload_days = optional(number)
+    expiration_days                        = optional(number)
+    noncurrent_version_expiration_days     = optional(number)
+  }))
+  default = []
+}

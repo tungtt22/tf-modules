@@ -78,6 +78,7 @@ module "context" {
 | Common | `common/multi_string_replacer` | Utility placeholder replacement helper |
 | AWS | `aws/networking/vpc` | Starter VPC module scaffold |
 | AWS | `aws/storage/s3` | Reusable S3 bucket module with secure defaults |
+| AWS | `aws/edge/cloudfront` | CloudFront distribution module for S3 private origins |
 | Azure | `azure/networking/vnet` | Starter VNet module scaffold |
 | GCP | `gcp/networking/vpc` | Starter VPC module scaffold |
 

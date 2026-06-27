@@ -10,6 +10,7 @@ Reusable AWS S3 bucket module with secure defaults for versioning, server-side e
 - blocks public access by default
 - supports optional KMS encryption and force destroy
 - supports optional S3 static website hosting
+- supports optional CORS, lifecycle rules, and additional bucket policy statements
 
 ## Usage
 
@@ -44,6 +45,7 @@ module "website_bucket" {
 - public access block is enabled by default
 - server-side encryption is enabled by default using `AES256`
 - versioning is enabled by default
+- object ownership defaults to `BucketOwnerEnforced`
 - website hosting is disabled by default
 
 ## Website Hosting Notes
@@ -52,9 +54,17 @@ module "website_bucket" {
 - when `website_public_access_enabled = true`, the module automatically relaxes the public policy block settings required for public website reads
 - objects still need to exist in the bucket, for example `index.html`
 
+## CloudFront Readiness
+
+This module is ready to work with a separate CloudFront module later:
+
+- the bucket stays private by default
+- `bucket_regional_domain_name` is exposed for S3 origin usage
+- `additional_policy_json` can merge in extra statements when needed
+- `BucketOwnerEnforced` is enabled by default, which fits modern S3 usage well
+
 ## Next Recommended Enhancements
 
-- lifecycle rules
 - access logging
 - event notifications
 - replication
